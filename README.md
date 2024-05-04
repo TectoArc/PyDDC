@@ -13,7 +13,7 @@ The user must have Python-3.11.0 or above installed. Following are the lsit of p
 The coupling of the non-linear flow andtransport problem is handled by 2 interacting modules:
 
 
-1. _formulate_: Contains Python files '''IP.py''', V.py and TH.py. IP.ModelInitialization(file) reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function _MeshRefinement(type=mesh_type) to define the 2D computational domain. TH.py holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
+1. _formulate_: Contains Python files ```IP.py```, V.py and TH.py. IP.ModelInitialization(file) reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function _MeshRefinement(type=mesh_type) to define the 2D computational domain. TH.py holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
 
 
 phase_module: Contains python files density.py, solubility.py, diffusivity.py and viscosity.py.
