@@ -1,5 +1,5 @@
 ## PyDDC: A Lagrangian based numerical framework for simulating density driven convection of CO2--brine miscible flows in saturated porous media at geological storage conditions.
-A reservoir simulator for solving 2D density-driven convection of CO2--brine mixture in fully saturated aquifers at geologic storage conditions. It uses a finite volume approach to solve the Darcy flux and combines it with a random walk particle tracking approach to simulate the sclar transport. Heterogeneity can be introduced by user specified random field meta-parameters --- mean permeability, log normal permeabiltiy variance and anisotropy based on difference in axial correlation lengths. Constains phase module for estimating the single phase attributes namely concentration, ddensity, viscosity and diffusion coefficient of the mixture at ambient reservoir pressrue and temperature.
+A reservoir simulator for solving 2D density-driven convection of CO2--brine mixture in fully saturated aquifers at geologic storage conditions. It uses a finite volume approach to solve the Darcy flux and combines it with a random walk particle tracking approach to simulate the sclar transport. Heterogeneity can be introduced by user specified random field meta-parameters --- mean permeability, log normal permeabiltiy variance and anisotropy based on difference in axial correlation lengths. Constains phase module for estimating the single phase attributes namely concentration, density, viscosity and diffusion coefficient of the mixture at ambient reservoir pressrue and temperature.
 
 ## Package Dependencies
 The user must have Python-3.11.0 or above installed. Following are the lsit of packages with their minimum version of requirement which are needed to be installed before installing PyDDC. 
@@ -13,7 +13,7 @@ The user must have Python-3.11.0 or above installed. Following are the lsit of p
 The coupling of the non-linear flow andtransport problem is handled by 2 interacting modules:
 
 
-1.formulate: Contains Python files IP.py, V.py and TH.py. IP.ModelInitialization(file) reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function _MeshRefinement(type=mesh_type) to define the 2D computational domain. TH.py holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
+1. _formulate_: Contains Python files IP.py, V.py and TH.py. IP.ModelInitialization(file) reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function _MeshRefinement(type=mesh_type) to define the 2D computational domain. TH.py holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
 
 
 phase_module: Contains python files density.py, solubility.py, diffusivity.py and viscosity.py.
