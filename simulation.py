@@ -116,28 +116,7 @@ class Simulate:
 
         F = fs.FlowSolver(self.kf)
         F.solve(self.attr["rho"], self.attr["mu"])
-
-        speed = np.log10(np.linalg.norm(F.Q, axis=1)).reshape(100, 500)
-        fig, ax = plt.subplots(2, 1, sharex="col")
-        pimg = ax[0].imshow(F.p[1:-1, 1:-1]/1e6, origin="lower", aspect="auto", extent=(0, V.L, 0, V.H), vmin = F.p[1:-1, 1:-1].min()/1e6, vmax = F.p[1:-1, 1:-1].max()/1e6, cmap="viridis")
-        cb0 = fig.colorbar(pimg, ax=ax[0], ticks=np.linspace(F.p[1:-1, 1:-1].min()/1e6, F.p[1:-1, 1:-1].max()/1e6, 5))
-        sp = ax[1].streamplot(V.xx[1:-1, 1:-1], V.yy[1:-1, 1:-1], F.Q[:, 0].reshape(100, 500), F.Q[:, 1].reshape(100, 500), color=speed, broken_streamlines=False, linewidth=1, cmap="Greys")
-        # fig.colorbar(sp.lines)
-        for art in ax[1].get_children():
-            if not isinstance(art, matplotlib.patches.FancyArrowPatch):
-                continue
-            art.remove()
-        kimg = ax[1].imshow(speed, origin="lower", aspect="auto", extent=(0, V.L, 0, V.H), vmin = speed.min(), vmax = speed.max(), cmap="Blues")
-        cb1 = fig.colorbar(kimg, ax=ax[1], ticks=np.linspace(speed.min(), speed.max(), 5))
-        
-        cb0.set_label(r"$P$ $(MPa)$")
-        cb1.set_label(r"$log \sqrt{v_x^2 + v_y^2}$")
-        ax[0].title.set_text(r"Background flow: $q_x$:{} $(m/y)$".format(np.round(np.mean(F.Q[:, 0])/3.17e-8), 3))
-        ax[0].set_ylabel(r"$y$")
-        ax[1].set_xlabel(r"$x$")
-        ax[1].set_ylabel(r"$y$")
-        fig.savefig("Init cond.png", dpi=800)
-        print("generated")
+        print("Initial condition configured")
         return F 
 
     def ParticleTracker(self, steps=None, realization=1, intervals=1, params=None):
