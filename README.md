@@ -19,7 +19,7 @@ The coupling of the non-linear flow andtransport problem is handled by 2 interac
 2. **phase_module**: Contains python files **density.py**, **solubility.py**, **diffusivity.py** and **viscosity.py**.
 
 
-  "*"density.py: Estimates the density of the brine and the CO2--brine mixture at amnbient reservoir pressure and temperature.
+  *density.py: Estimates the density of the brine and the CO2--brine mixture at amnbient reservoir pressure and temperature.
                  The density class can be initialized by creating the class object ```d=Density(P,T)```. The density of the water can be computed by
                  calling ```d._iapws97()```. ```d.ComputeCO2BrineDensity(X)``` computes the density of the mixture or pure brine based on the mole
                  fraction of CO2 (X) in brine. Internally it calls the functions ```d._h20MolarVolume()``` and ```d.ApparentMolarVolumeSalt()``` to
