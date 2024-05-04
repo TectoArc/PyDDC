@@ -13,17 +13,17 @@ The user must have Python-3.11.0 or above installed. Following are the lsit of p
 The coupling of the non-linear flow andtransport problem is handled by 2 interacting modules:
 
 
-1. _formulate_: Contains Python files ```IP.py```, V.py and TH.py. IP.ModelInitialization(file) reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function _MeshRefinement(type=mesh_type) to define the 2D computational domain. TH.py holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
+1. **formulate**: Contains Python files ```IP.py```, ```V.py``` and ```TH.py```. ```IP.ModelInitialization(file)``` reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function ```_MeshRefinement(type=mesh_type)``` to define the 2D computational domain. ```TH.py``` holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
 
 
-phase_module: Contains python files density.py, solubility.py, diffusivity.py and viscosity.py.
+2. **phase_module**: Contains python files **density.py**, **solubility.py**, **diffusivity.py** and **viscosity.py**.
 
 
-density.py: Estimates the density of the brine and the CO2--brine mixture at amnbient reservoir pressure and temperature.
-The density class can be initialized by creating the class object d=Density(P,T). The density of the water can be computed by
-calling d._iapws97(). d.ComputeCO2BrineDensity(X) computes the density of the mixture or pure brine based on the mole
-fraction of CO2 (X) in brine. Internally it calls the functions d._h20MolarVolume() and d.ApparentMolarVolumeSalt() to
-compute the molar volumes of the different species required to compute the density.
+  "*"density.py: Estimates the density of the brine and the CO2--brine mixture at amnbient reservoir pressure and temperature.
+                 The density class can be initialized by creating the class object ```d=Density(P,T)```. The density of the water can be computed by
+                 calling ```d._iapws97()```. ```d.ComputeCO2BrineDensity(X)``` computes the density of the mixture or pure brine based on the mole
+                 fraction of CO2 (X) in brine. Internally it calls the functions ```d._h20MolarVolume()``` and ```d.ApparentMolarVolumeSalt()``` to
+                 compute the molar volumes of the different species required to compute the density.
 
 
 solubility.py: Estimates the CO2 solubility in brine at any pressure and temperature. It is used to obtain the Dirichlet
