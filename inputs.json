@@ -1,0 +1,51 @@
+{
+    "domain_params":
+    {
+        "Length" : 1000,
+        "Height" : 100,
+        "NumCellsX" : 500,
+        "NumCellsY" : 100,
+        "refine_levels": 0,
+        "res_levels": 0
+    },
+
+    "physical_params":
+    {
+        "Pressure" : 30, 
+        "Temperature" : 50,
+        "SubgridLongitudinalDispersion" : 0.1, 
+        "SubgridTransverseDispersion" : 0.001,
+        "SimulationTime" : 300,
+        "TimeIncrement" : 1e6
+    },
+
+    "kfield_params":
+    {
+        "Mean" : 1e-13,
+        "lnVariance": 0.5, 
+        "CorrelationLength": [100, 10]
+    },
+
+    "boundary_params":
+    {
+        "PressureIncrementLeft" : 0.1,
+        "PressureIncrementRight" : 0
+    },
+
+    "phase_params":
+    {
+        "NaCl": 0.1, 
+        "BrineDensity" : 1066.5,
+        "CO2SaturatedBrineDensity" : 1072.5,
+        "CO2SaturatedBrineViscosity": 0,
+        "BrineViscosity" : 5e-4,
+        "DiffusionCoefficient" : 1e-9,
+        "CO2SaturatedConcentration" : 2848.0
+    }, 
+
+    "reservoir_params":
+    {
+        "horizontal_extent": [200, 800], 
+        "molesperparticle": 1
+    }
+}
