@@ -1,4 +1,4 @@
-## PyDDC: A Lagrangian based numerical framework for simulating density driven convection of CO2--brine miscible flows in saturated porous media at geological storage conditions.
+## PyDDC: An Eulerian-Lagrangian simulator for density driven convection of $\mathrm{CO_2}$--brine systems in saturated porous media.
 A reservoir simulator for solving 2D density-driven convection of CO2--brine mixture in fully saturated aquifers at geologic storage conditions. It uses a finite volume approach to solve the Darcy flux and combines it with a random walk particle tracking approach to simulate the scalar transport. Heterogeneity can be introduced by user specified random field meta-parameters --- mean permeability, log normal permeabiltiy variance and anisotropy based on difference in axial correlation lengths. Constains phase module for estimating the single phase attributes namely concentration, density, viscosity and diffusion coefficient of the mixture at ambient reservoir pressure and temperature.
 
 ## Package Dependencies
