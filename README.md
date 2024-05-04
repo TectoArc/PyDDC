@@ -74,4 +74,5 @@ _simulation.py_: Establishes the overall flow of control by integrating the prev
 
 ## Using the software
 ```import pyddc as p```
+
 ```p.Simulate(filename="inputs.json", datafile="prop_test.h5", UsePhaseModule=True).ParticleTracker()```
