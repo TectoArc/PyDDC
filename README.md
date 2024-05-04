@@ -10,7 +10,7 @@ The user must have Python-3.11.0 or above installed. Following are the lsit of p
   5. tqdm - 4.66.2
 
 ## Functionalities
-The coupling of the non-linear flow andtransport problem is handled by 2 interacting modules:
+The coupling of the non-linear flow andtransport problem is handled by 3 interacting modules:
 
 
 1. **formulate**: Contains Python files _IP.py_, _V.py_ and _TH.py_. ```IP.ModelInitialization(file)``` reads data from inputs.json (file) and creates attribute repository file V.py to store global variables required for simulation. It contains function ```_MeshRefinement(type=mesh_type)``` to define the 2D computational domain. ```TH.py``` holds data information to configure the phase equilibrium model of the CO2--brine mixture and compute phase attributes during simulation if the inbuilt thermodynamic model is used.
@@ -71,3 +71,7 @@ the overall flow and transport behaviour on a predefiend homogeneous or heteroge
 
 
 _simulation.py_: Establishes the overall flow of control by integrating the previously defined modules in an efficient way. The high level control is provided by the ```Simulate(filename, kf, phif, UsePhaseModule, datafile)``` class inside which all the functionalities are defined. filename is the input JSON file containing the list of pre-defiend physical parameters and datafile is the name of the binary HDF5 file used to store simulation results. The user can directly supply permebaility (kf) and porosity (phif) fields if necessary and those field values would be used instead. Similarly the user can also decide whether or not to use the inbuilt phase module through the argument UsePhaseModule which is a boolean variable. If UsePhaseModule is set to false, the Simulate class reads the CO2 saturated concentration, diffusion coefficient and end-member density and viscosity from the global attribute repository _V.py_, defines interpolation functions for density and viscosity. The simulation process is initiated by calling the function ```ParticleTracker(steps=None, realization=1, intervals=1, params=None)``` where steps denote the user specified number of steps for the simulation to run, realization is the simulation result for a single permebaility-porosity field realization, intervals is the alternate period in years where the data has to be stored and params is a dictionary containing phase attributes which are computed by the user if those quantities are not determined from the inbuilt phase module.
+
+## Using the software
+```import pyddc as p```
+```p.Simulate(filename="inputs.json", datafile="prop_test.h5", UsePhaseModule=True).ParticleTracker()```
