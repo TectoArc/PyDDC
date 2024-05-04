@@ -17,6 +17,7 @@ The coupling of the non-linear flow andtransport problem is handled by 2 interac
 
 
 2. **phase_module**: Contains python files **density.py**, **solubility.py**, **diffusivity.py** and **viscosity.py**.
+   - density.py
 
 
   -density.py: Estimates the density of the brine and the CO2--brine mixture at amnbient reservoir pressure and temperature.
