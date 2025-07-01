@@ -1,12 +1,9 @@
 import numpy as np
-from numba import jit
-import V
-import random_field as field
+from . import V
+# import random_field as field
+from . import random_field as field
 from scipy.interpolate import NearestNDInterpolator, LinearNDInterpolator
 from scipy.spatial import cKDTree
-# import cvxpy as cp
-import cvxopt
-from cvxopt import matrix, solvers 
 
 class helpers:
     @staticmethod

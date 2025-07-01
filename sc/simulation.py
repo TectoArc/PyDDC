@@ -1,11 +1,12 @@
 
 import numpy as np
 import co2br
-from random_field import Field
-from particle_tracking import PT, helpers
-import flow_solver as fs
+from . random_field import Field
+from . particle_tracking import PT, helpers
+from . import flow_solver as fs
+# import . flow_solver as fs
 import json
-import V
+from . import V
 import tables
 from tqdm import tqdm 
 import logging

@@ -6,8 +6,10 @@ PyDDC.egg-info/dependency_links.txt
 PyDDC.egg-info/requires.txt
 PyDDC.egg-info/top_level.txt
 sc/V.py
+sc/__init__.py
 sc/flow_solver.py
 sc/janitor.py
+sc/metrics.py
 sc/particle_tracking.py
 sc/random_field.py
 sc/simulation.py

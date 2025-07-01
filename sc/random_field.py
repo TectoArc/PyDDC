@@ -2,7 +2,7 @@
 import gstools as gs
 import numpy as np
 from scipy.optimize import root
-import V
+from . import V
 
 def Kozeny_Carman(x, k, d):
     return x**3 - k*2.5*(1-x)**2*(6/d)**2

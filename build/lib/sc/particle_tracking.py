@@ -34,7 +34,7 @@ class helpers:
         return interp(ppos).reshape(-1, 1)
     
     @staticmethod
-    def resample(plst, w0, log, max_iter=50, tol=1e-8):
+    def resample(plst, w0, max_iter=50, tol=1e-8):
         TC = len(plst)/V.DSF # Net target particle count
         w0 = w0.reshape(-1, 1)
         tree = cKDTree(V.En_int)
@@ -96,7 +96,7 @@ class PT:
 
     def particle_injection(self, c):
         phi = self.phi[-2, 1:-1][V.dirichlet_dofs]
-        J = -V.D*phi*(c[:, 1:-1][-2, V.dirichlet_dofs] - self.c_sat)/V.dy[-2][0]*2
+        J = -V.D*phi*(c[-2, 1:-1][V.dirichlet_dofs] - self.c_sat)/V.dy[-2][0]*2
         Np = (J*phi*V.dx[1:-1][V.dirichlet_dofs].T*self.dt/V.mpp).astype("int64").flatten()
 
         S = np.empty([0, 2]) 
@@ -104,7 +104,7 @@ class PT:
             if Np[j] == 0:
                 continue
             px = np.random.uniform(V.xf[1:-1][i], V.xf[1:-1][i+1], Np[j])
-            py = np.random.normal(V.H, np.sqrt(2*V.D*self.dt), Np[j])            
+            py = np.random.normal(V.H, np.sqrt(2*V.D*phi[j]*self.dt), Np[j])            
             pxy = np.array(list(zip(px, py)))
             S = np.concatenate((S, pxy))
 
@@ -142,16 +142,14 @@ class PT:
     def apply_diffusion_bcs(self, plst): 
         db = np.where((plst[:, 2]>V.H) & ((plst[:, 1]>=V.extent[0]) & (plst[:, 1]<=V.extent[1])))
         nb = ((plst[:, 2]>V.H) & ((plst[:, 1]<V.extent[0]) | (plst[:, 1]>V.extent[1]))) 
-        # rb = np.where((plst[:, 1]>V.L) | (plst[:, 1]<0.) | (plst[:, 2] < 0.))
-        rb = np.where(plst[:, 1]>V.L) 
-        lb = np.where(plst[:, 1]<0.)
+        rb = plst[:, 1]>V.L
+        lb = plst[:, 1]<0.
         bb = plst[:, 2] < 0.
         plst[nb] = helpers.reflection(plst[nb], np.array(V.H), "x")
         plst[rb] = helpers.reflection(plst[rb], np.array(V.L), "y")
         plst[lb] = helpers.reflection(plst[lb], np.array(0.), "y")
         plst[bb] = helpers.reflection(plst[bb], np.array(0.), "x")
         plst = np.delete(plst, db, axis=0)
-        # plst = np.delete(plst, rb, axis=0)
         return plst
     
     def apply_dispersion_bcs(self, plst):
@@ -160,8 +158,9 @@ class PT:
         nb_bottom = (plst[:, 2] < 0.) 
         plst[nb_top] = helpers.reflection(plst[nb_top], np.array(V.H), "x")
         plst[nb_bottom] = helpers.reflection(plst[nb_bottom], np.array(0.), "x")
+        tot_mass = plst[db][:, 0].sum()
         plst = np.delete(plst, db, axis=0)
-        return plst
+        return plst, tot_mass
 
 
 

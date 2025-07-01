@@ -121,7 +121,7 @@ def execute(inp_jf_path, out_folder, realizations=1):
         shutil.rmtree(o_dir)
 
 if __name__ == "__main__":
-    execute("/home/sayan/ctrans_mod/inputs.json", "results11", realizations=1)
+    execute("/home/sayan/ctrans_mod/inputs.json", "results", realizations=1)
 #     inp_jf_path = "/home/sayan/pyddc/inputs.json" # full path of input file
 #     io_files = GenerateIOFiles(inp_jf_path)
 #     realizations = 1

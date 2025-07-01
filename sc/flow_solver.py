@@ -1,9 +1,10 @@
 import numpy as np
 from scipy.sparse import diags
 from scipy.sparse.linalg import bicg, splu
-import V
-import random_field as field
-from particle_tracking import helpers
+from . import V
+# import random_field as field
+from . import random_field as field
+from . particle_tracking import helpers
 
 class FlowSolver:
     def __init__(self, k, phi):

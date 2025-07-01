@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="PyDDC",
-    version='1.1',
+    version='1.2',
     author="Sayan Sen, Scott K. Hansen",
     package=find_packages(),
     install_requires=[

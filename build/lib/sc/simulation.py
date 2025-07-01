@@ -6,7 +6,6 @@ from particle_tracking import PT, helpers
 import flow_solver as fs
 import json
 import V
-import h5py
 import tables
 from tqdm import tqdm 
 import logging
@@ -220,11 +219,12 @@ class Simulate:
             self.logger.info("particle locations {} - {} , {} - {}".format(self.Ln[:, 1].min(), self.Ln[:, 1].max(), self.Ln[:, 2].min(), self.Ln[:, 2].max()))
             dX = rwpt.disperse(A, B, self.Ln[:, 1:])
             self.Ln[:, 1:] += dX
-            self.Ln = rwpt.apply_dispersion_bcs(self.Ln)
+            self.Ln, om = rwpt.apply_dispersion_bcs(self.Ln) # om: outsude mass that leaves the domain by dispersion
+            TM = om + self.Ln[:, 0].sum()
 
             if V.DSF!=None or V.DSF!=0:
                 self.logger.info("Downsampling particles...present count = {}".format(self.Ln.shape[0]))
-                self.Ln = helpers.resample(plst=self.Ln[:, 1:], w0=self.Ln[:, 0], log=self.logger)
+                self.Ln = helpers.resample(plst=self.Ln[:, 1:], w0=self.Ln[:, 0])
                 self.logger.info("Downsampled Particle count = {}".format(self.Ln.shape[0]))
 
             p_wts = rwpt.binned_concentration(self.Ln)
@@ -241,6 +241,7 @@ class Simulate:
             if int(t) not in t_arr:
                 self.logger.info("Printing data at t = {} years".format(t))
                 self.df_t.append(np.array([t]))
+                self.df_M.append(np.array([TM]))
                 self.df_J.append(J[np.newaxis, :])
                 self.df_c.append(self.attr["c"][np.newaxis, :, :])
                 self.df_rho.append(self.attr["rho"][np.newaxis, :, :])
@@ -248,13 +249,13 @@ class Simulate:
                 self.df_ppos.append(self.Ln)
                 self.df_D.append(D[np.newaxis, :, :, :])
             t_arr.append(int(t))
-            break
         progress.close()
 
     def WriteDataObj(self):
         self.dg = self.df.create_group("/", "{}".format(self.data), "data")
         filters = tables.Filters(complevel=5, complib='zlib')
         self.df_t = self.df.create_earray(self.dg, "time", atom=tables.Float32Atom(), shape=(0, ), filters=filters)
+        self.df_M = self.df.create_earray(self.dg, "total_moles", atom=tables.Float32Atom(), shape=(0, ), filters=filters)
         self.df_J = self.df.create_earray(self.dg, "flux", atom=tables.Float32Atom(), shape=(0, len(V.dirichlet_dofs)), filters=filters)
         self.df_v = self.df.create_earray(self.dg, "drift", atom=tables.Float32Atom(), shape=(0, (V.ny+1)*(V.nx+1), 2), filters=filters)
         self.df_c = self.df.create_earray(self.dg, "concentration", atom=tables.Float32Atom(), shape=(0, V.ny+2, V.nx+2), filters=filters)
@@ -265,6 +266,8 @@ class Simulate:
         self.df_ndofs = self.df.create_array(self.dg, "neumann_dofs", V.neumann_dofs)
         self.df_en = self.df.create_array(self.dg, "eulerian_nodes", V.En)
         self.df_ef = self.df.create_array(self.dg, "eulerian_facets", V.Ef)
+        self.df_k = self.df.create_array(self.dg, "permeability", self.kf)
+        self.df_phi = self.df.create_array(self.dg, "porosity", self.phif)
 
          
 if __name__ == "__main__":

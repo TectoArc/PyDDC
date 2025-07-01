@@ -7,7 +7,10 @@ import tempfile
 import subprocess
 from itertools import product
 import shutil
-    
+import sys
+from pathlib import Path
+
+
 def __assemble_realizations(input_files, output_files, out_f=None):
     # out_path = "/home/sayan/pyddc/results9/"
     if out_f is None:
@@ -97,9 +100,11 @@ def execute(inp_jf_path, out_folder, realizations=1):
     Returns:
         None
     '''
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     parent = pathlib.Path.cwd()
     io_files = GenerateIOFiles(inp_jf_path)
-    dispatcher = [['python3', parent/'sc/simulation.py', i, o, data, pid, str(r)] for i, o, data, pid in io_files for r in range(1, realizations+1)]
+    # dispatcher = [['python3', parent/'sc/simulation.py', i, o, data, pid, str(r)] for i, o, data, pid in io_files for r in range(1, realizations+1)]
+    dispatcher = [['python3', '-m', 'sc.simulation', i, o, data, pid, str(r)] for i, o, data, pid in io_files for r in range(1, realizations+1)]
     proc = []
 
     try:
@@ -121,6 +126,7 @@ def execute(inp_jf_path, out_folder, realizations=1):
         shutil.rmtree(o_dir)
 
 if __name__ == "__main__":
+
     execute("/home/sayan/ctrans_mod/inputs.json", "results", realizations=1)
 #     inp_jf_path = "/home/sayan/pyddc/inputs.json" # full path of input file
 #     io_files = GenerateIOFiles(inp_jf_path)
